@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'myapps.apps.CaisseConfig', # polls.apps.PollsConfig
+    'myapp.apps.CaisseConfig', # polls.apps.PollsConfig
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myappdb',
-        'USER': 'admin',
-        'PASSWORD': 'secret',
+        'NAME': os.environ["DJANGO_DB_NAME"],
+        'USER': os.environ["DJANGO_DB_USER"],
+        'PASSWORD': os.environ["DJANGO_DB_PASSWORD"],
         'HOST': 'localhost',
         'PORT': '',
     }
