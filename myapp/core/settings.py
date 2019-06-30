@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': os.environ["DJANGO_DB_NAME"],
         'USER': os.environ["DJANGO_DB_USER"],
         'PASSWORD': os.environ["DJANGO_DB_PASSWORD"],
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '',
     }
 }
