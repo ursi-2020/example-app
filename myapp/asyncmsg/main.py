@@ -1,7 +1,7 @@
 import sys
 import os
 import django
-from myapp.myapp.models import *
+from ..myapp.models import *
 
 sys.dont_write_bytecode = True
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")

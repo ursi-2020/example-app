@@ -23,11 +23,21 @@ _term() {
 trap _int SIGINT
 trap _term SIGTERM
 
+FAIL=0
+
 python "${DIR}/myapp/manage.py" makemigrations
 python "${DIR}/myapp/manage.py" migrate
 python "${DIR}/myapp/manage.py" runserver 0.0.0.0:${WEBSERVER_PORT} &
 python "${DIR}/myapp/asyncmsg/main.py" &
 
-child=$!
-wait ${child}
-exit $?
+for job in `jobs -p`
+do
+    wait ${job} || let "FAIL+=1"
+done
+
+if [[ "$FAIL" == "0" ]];
+then
+    exit 0
+else
+    exit 1
+fi
