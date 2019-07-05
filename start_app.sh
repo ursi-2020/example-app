@@ -26,7 +26,7 @@ trap _term SIGTERM
 python "${DIR}/myapp/manage.py" makemigrations
 python "${DIR}/myapp/manage.py" migrate
 python "${DIR}/myapp/manage.py" runserver 0.0.0.0:${WEBSERVER_PORT} &
-python "${DIR}/asyncmsg/main.py"
+python "${DIR}/myapp/asyncmsg/main.py" &
 
 child=$!
 wait ${child}
