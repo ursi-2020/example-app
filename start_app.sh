@@ -11,24 +11,41 @@ source "${venvdir}/bin/activate"
 pip install -r "${DIR}/requirements.txt"
 
 _int() {
-  kill -TERM "$child" 2>/dev/null
-  exit 130
+    for job in `jobs -p`
+    do
+        kill -TERM "$job" 2>/dev/null
+    done
+
+    exit 130
 }
 
 _term() {
-  kill -TERM "$child" 2>/dev/null
-  exit 0
+    for job in `jobs -p`
+    do
+        kill -TERM "$job" 2>/dev/null
+    done
+    exit 0
 }
 
 trap _int SIGINT
 trap _term SIGTERM
 
 FAIL=0
+export PYTHONPATH=${DIR}
 
-python "${DIR}/myapp/manage.py" makemigrations
-python "${DIR}/myapp/manage.py" migrate
-python "${DIR}/myapp/manage.py" runserver 0.0.0.0:${WEBSERVER_PORT} &
-python "${DIR}/myapp/asyncmsg/main.py" &
+python -m application.manage makemigrations
+python -m application.manage migrate
+mkdir -p "${DIR}/static"
+mkdir -p "${DIR}/medias"
+python -m application.manage collectstatic --clear --no-input
+
+if [[ "$#" -gt 0 ]] && [[ "$1" == "loadexampledata" ]]
+then
+    python -m application.manage loaddata fixtures/example.json
+fi
+
+python -m application.manage runserver 0.0.0.0:${WEBSERVER_PORT} &
+python -m application.asyncmsg.main &
 
 for job in `jobs -p`
 do

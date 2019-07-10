@@ -108,3 +108,7 @@ venv/
 .idea/
 *.env
 */__pycache/
+start_app_host.sh
+application/djangoapp/migrations/*
+medias/*
+static/*
