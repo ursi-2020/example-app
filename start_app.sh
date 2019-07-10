@@ -41,7 +41,7 @@ python -m application.manage collectstatic --clear --no-input
 
 if [[ "$#" -gt 0 ]] && [[ "$1" == "loadexampledata" ]]
 then
-    python -m application.manage loaddata fixtures/example.json
+    python -m application.manage loaddata "${DIR}/fixtures/example.json"
 fi
 
 python -m application.manage runserver 0.0.0.0:${WEBSERVER_PORT} &
