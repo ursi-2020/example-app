@@ -110,5 +110,6 @@ venv/
 */__pycache/
 start_app_host.sh
 application/djangoapp/migrations/*
+*/migrations/*
 medias/*
 static/*
