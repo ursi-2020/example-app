@@ -10,5 +10,6 @@ class ApplicationConfig(AppConfig):
     name = 'application.djangoapp'
 
     def ready(self):
-        api.unregister(os.environ['DJANGO_APP_NAME'])
-        api.register(myappurl, os.environ['DJANGO_APP_NAME'])
+        if os.environ.get('RUN_MAIN'):
+            api.unregister(os.environ['DJANGO_APP_NAME'])
+            api.register(myappurl, os.environ['DJANGO_APP_NAME'])
